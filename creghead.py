@@ -89,7 +89,7 @@ for reg in c.regs:
                   str(bit_pos) + '); x |= (v & ' + mask + ') << ' + str(bit_pos) + ';} while(0)'
                bit_pos += bit[1]
          else:
-            print '/* bit ' + str(bit_pos) + ' ignored */' # multiple unused bits
+            print '/* bits ' + str(bit_pos) + ' - ' + str(bit_pos + bit[1] - 1) + ' ignored */'
             bit_pos += bit[1]
       print
    print define_prefix + '_DEBUG(x) \\\n   do { printf("' + reg_name + ': ' +  ' = %X, "\\\n      "'.join(zip(*dbg_list)[0]) + \
