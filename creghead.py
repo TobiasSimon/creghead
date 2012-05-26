@@ -54,7 +54,7 @@ print header
 print '#ifndef __' + c.prefix + '_REGS_H__'
 print '#define __' + c.prefix + '_REGS_H__'
 for reg in c.regs:
-   print '\n'
+   print '\n\n'
    try:
       reg_name, id, width, doc, bits = reg
       print '/* ' + doc + ' */'
@@ -91,6 +91,7 @@ for reg in c.regs:
          else:
             print '/* bit ' + str(bit_pos) + ' ignored */' # multiple unused bits
             bit_pos += bit[1]
+      print
    print define_prefix + '_DEBUG(x) \\\n   do { printf("' + reg_name + ': ' +  ' = %X, "\\\n      "'.join(zip(*dbg_list)[0]) + \
          ' = %X\\n", ' + ', \\\n      '.join(zip(*dbg_list)[1]) + '); } while(0)'
    if bit_pos != width:
