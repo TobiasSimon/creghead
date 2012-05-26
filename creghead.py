@@ -63,23 +63,27 @@ for reg in c.regs:
    define_prefix = '#define ' + c.prefix + '_' + reg_name
    print define_prefix + ' (' + hex(id) + ')'
    bit_pos = 0
+   dbg_list = []
    for bit in bits:
       if not bit: # single unused bit
          print '/* bit ' + str(bit_pos) + ' ignored */'
          bit_pos += 1
       elif isinstance(bit, str): # undocumented 
+         dbg_list.append((bit, c.prefix + '_' + reg_name + '_GET_' + bit + '(x)'))
          single_bit_output(define_prefix, bit, bit_pos)
          bit_pos += 1
       elif isinstance(bit, tuple):
          if bit[0]:
             if isinstance(bit[1], str):
                print '/* ' + bit[1] + ' */'
+               dbg_list.append((bit[0], c.prefix + '_' + reg_name + '_GET_' + bit[0] + '(x)'))
                single_bit_output(define_prefix, bit[0], bit_pos)
                bit_pos += 1
             else:
                if len(bit) == 3:
                   print '/* ' + bit[2] + ' */'
                mask = hex(2 ** (bit[1]) - 1)
+               dbg_list.append((bit[0], c.prefix + '_' + reg_name + '_GET_' + bit[0] + '(x)'))
                print define_prefix + '_GET_' + bit[0] + '(x) \\\n   (((x) >> ' + str(bit_pos) + ') & ' + mask + ')'
                print define_prefix + '_SET_' + bit[0] + '(x, v) \\\n   do {x &= ~(' + mask + ' << ' + \
                   str(bit_pos) + '); x |= (v & ' + mask + ') << ' + str(bit_pos) + ';} while(0)'
@@ -87,7 +91,8 @@ for reg in c.regs:
          else:
             print '/* bit ' + str(bit_pos) + ' ignored */' # multiple unused bits
             bit_pos += bit[1]
-      print
+   print define_prefix + '_DEBUG(x) \\\n   do { printf("' + reg_name + ': ' +  ' = %X, "\\\n      "'.join(zip(*dbg_list)[0]) + \
+         ' = %X\\n", ' + ', \\\n      '.join(zip(*dbg_list)[1]) + '); } while(0)'
    if bit_pos != width:
       raise AssertionError('final bit position %d does not match register width %d' % (bit_pos, width))
 print '\n#endif /* __' + c.prefix + '_REGS_H__ */\n'

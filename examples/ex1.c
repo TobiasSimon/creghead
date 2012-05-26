@@ -19,5 +19,6 @@ int main(void)
    EXAMPLE_BUFFER_CLEAR_TX_ERROR(val);
    printf("val = %X\n", val);
    printf("tx-error? %d\n", EXAMPLE_BUFFER_GET_TX_ERROR(val));
+   EXAMPLE_BUFFER_DEBUG(val);
 }
 
