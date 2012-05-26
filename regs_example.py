@@ -1,8 +1,7 @@
 
-
 prefix = 'UM6'
 regs = [
-   ('COMM', 0x00, 32, 'register docstring',
+   ('COMM', 0x00, 32, 'communication settings',
       [
          ('BC_RATE',   8, 'packet broadcast frequency; freq = (280 / 255) * broadcast_rate + 20'),
          ('BAUD_RATE', 3, 'serial port baudrate; 000: 9600, 001: 14400, 010: 19200, 011 -> 38400, 100 -> 57600, 101 -> 115200'),
