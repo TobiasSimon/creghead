@@ -12,3 +12,6 @@ features:
 
 to generate the example header, type:
     ./creghead.py examples/regs_ex1.py > examples/regs_ex1.h
+to test the header, type:
+    gcc examples/ex1.c -o ex1
+    ./ex1

@@ -10,9 +10,9 @@
 /* buffer status register */
 #define EXAMPLE_BUFFER (0)
 /* rx_buffered */
-#define EXAMPLE_BUFFER_GET_RC_COUNT(x) \
+#define EXAMPLE_BUFFER_GET_RX_COUNT(x) \
    (((x) >> 0) & 0x3f)
-#define EXAMPLE_BUFFER_SET_RC_COUNT(x, v) \
+#define EXAMPLE_BUFFER_SET_RX_COUNT(x, v) \
    do {x &= ~(0x3f << 0); x |= (v & 0x3f) << 0;} while(0)
 
 /* tx_buffered */
