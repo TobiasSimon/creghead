@@ -10,12 +10,14 @@ features:
 * field access: set, get
 * reserved/unused fields
 
-to generate the example header, type:
-    
+to generate the example header, cd to creghead and type:
+    ```
     ./creghead.py examples/regs_ex1.py > examples/regs_ex1.h
+    ```
 
 to test the header, type:
-    
+    ```
     gcc examples/ex1.c -o ex1
     ./ex1
+    ```
 
