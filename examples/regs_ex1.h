@@ -9,6 +9,7 @@
 #define __EXAMPLE_REGS_H__
 
 
+
 /* buffer status register */
 #define EXAMPLE_BUFFER (0x0)
 /* rx_buffered */
@@ -16,12 +17,15 @@
    (((x) >> 0) & 0x3f)
 #define EXAMPLE_BUFFER_SET_RX_COUNT(x, v) \
    do {x &= ~(0x3f << 0); x |= (v & 0x3f) << 0;} while(0)
+
 /* tx_buffered */
 #define EXAMPLE_BUFFER_GET_TX_COUNT(x) \
    (((x) >> 6) & 0x3f)
 #define EXAMPLE_BUFFER_SET_TX_COUNT(x, v) \
    do {x &= ~(0x3f << 6); x |= (v & 0x3f) << 6;} while(0)
-/* bit 12 ignored */
+
+/* bits 12 - 13 ignored */
+
 /* set when a tx error occured */
 #define EXAMPLE_BUFFER_GET_TX_ERROR(x) \
    (((x) >> 14) & 1)
@@ -29,6 +33,7 @@
    do {x |= 1 << 14;} while (0)
 #define EXAMPLE_BUFFER_CLEAR_TX_ERROR(x) \
    do {x &= ~(1 << 14);} while (0)
+
 /* GPS relative position transmission */
 #define EXAMPLE_BUFFER_GET_RX_EMPTY(x) \
    (((x) >> 15) & 1)
@@ -36,6 +41,7 @@
    do {x |= 1 << 15;} while (0)
 #define EXAMPLE_BUFFER_CLEAR_RX_EMPTY(x) \
    do {x &= ~(1 << 15);} while (0)
+
 #define EXAMPLE_BUFFER_DEBUG(x) \
    do { printf("BUFFER: RX_COUNT = %X, "\
       "TX_COUNT = %X, "\
