@@ -19,7 +19,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
-from sys import argv
+import sys
 import os
 
 
@@ -27,18 +27,16 @@ def import_file(full_path_to_module):
     try:
         module_dir, module_file = os.path.split(full_path_to_module)
         module_name, module_ext = os.path.splitext(module_file)
-        save_cwd = os.getcwd()
-        os.chdir(module_dir)
-        module_obj = __import__(module_name)
-        module_obj.__file__ = full_path_to_module
-        os.chdir(save_cwd)
-        return module_obj
-    except:
+        sys.path.append(module_dir)
+        module = __import__(module_name)
+        return module
+    except Exception, ex:
+        print str(ex)
         raise ImportError
 
 
-assert len(argv) == 2
-c = import_file(argv[1])
+assert len(sys.argv) == 2
+c = import_file(sys.argv[1])
 
 def single_bit_output(define_prefix, name, bit_pos):
    print define_prefix + '_GET_' + name + '(x) \\\n   (((x) >> ' + str(bit_pos) + ') & 1)'
