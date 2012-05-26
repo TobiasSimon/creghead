@@ -6,7 +6,9 @@ registers and bit(field)s are defined in a python input file using
 simple lists and tuples, without any external configuration language.
 
 features:
-   bit access: set, clear, get
-   field access: set, get
-   reserved/unused fields
+* bit access: set, clear, get
+* field access: set, get
+* reserved/unused fields
 
+to generate the example header, type:
+    ./creghead.py examples/regs_ex1.py > examples/regs_ex1.h
