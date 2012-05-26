@@ -12,9 +12,7 @@ features:
 
 to generate and test the example header, cd to creghead and type:
 
-    ```
     ./creghead.py examples/regs_ex1.py > examples/regs_ex1.h
     gcc examples/ex1.c -o ex1
     ./ex1
-    ```
 
