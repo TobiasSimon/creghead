@@ -59,7 +59,11 @@ for reg in c.regs:
       reg_name, id, width, doc, bits = reg
       print '/* ' + doc + ' */'
    except:
-      reg_name, id, width, bits = reg
+      try:
+         reg_name, id, width, bits = reg
+      except:
+         reg_name, id, width = reg
+         bits = []
    define_prefix = '#define ' + c.prefix + '_' + reg_name
    print define_prefix + ' (' + hex(id) + ')'
    bit_pos = 0
@@ -92,9 +96,10 @@ for reg in c.regs:
             print '/* bits ' + str(bit_pos) + ' - ' + str(bit_pos + bit[1] - 1) + ' ignored */'
             bit_pos += bit[1]
       print
-   print define_prefix + '_DEBUG(x) \\\n   do { printf("' + reg_name + ': ' +  ' = %X, "\\\n      "'.join(zip(*dbg_list)[0]) + \
-         ' = %X\\n", ' + ', \\\n      '.join(zip(*dbg_list)[1]) + '); } while(0)'
-   if bit_pos != width:
-      raise AssertionError('final bit position %d does not match register width %d' % (bit_pos, width))
+   if len(bits) > 0:
+      print define_prefix + '_DEBUG(x) \\\n   do { printf("' + reg_name + ': ' +  ' = %X, "\\\n      "'.join(zip(*dbg_list)[0]) + \
+            ' = %X\\n", ' + ', \\\n      '.join(zip(*dbg_list)[1]) + '); } while(0)'
+      if bit_pos != width:
+         raise AssertionError('final bit position %d does not match register width %d' % (bit_pos, width))
 print '\n#endif /* __' + c.prefix + '_REGS_H__ */\n'
 
