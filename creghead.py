@@ -39,6 +39,7 @@ assert len(sys.argv) == 2
 c = import_file(sys.argv[1])
 
 def single_bit_output(define_prefix, name, bit_pos):
+   print define_prefix + '_' + name + ' \\\n   (1 << (' + str(bit_pos) + '))'
    print define_prefix + '_GET_' + name + '(x) \\\n   (((x) >> ' + str(bit_pos) + ') & 1)'
    print define_prefix + '_SET_' + name + '(x) \\\n   do {x |= 1 << ' + str(bit_pos) + ';} while (0)'
    print define_prefix + '_CLEAR_' + name + '(x) \\\n   do {x &= ~(1 << ' + str(bit_pos) + ');} while (0)'
